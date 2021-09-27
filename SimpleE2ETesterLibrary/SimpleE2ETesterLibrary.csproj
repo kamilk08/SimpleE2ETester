@@ -6,6 +6,7 @@
         <Company>SimpleE2ETesterLibrary</Company>
         <Product>SimpleE2ETesterLibrary</Product>
         <TargetFrameworks>net472;net48</TargetFrameworks>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <ItemGroup>
