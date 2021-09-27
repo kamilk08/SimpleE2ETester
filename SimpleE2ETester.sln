@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleE2ETesterLibrary", "SimpleE2ETesterLibrary\SimpleE2ETesterLibrary.csproj", "{06F33930-4ED6-43A9-81B0-38177790329D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleE2ETesterLibraryTests", "SimpleE2ETesterLibraryTests\SimpleE2ETesterLibraryTests.csproj", "{032E5833-CD64-40DD-9D1C-215A5A05B143}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{06F33930-4ED6-43A9-81B0-38177790329D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06F33930-4ED6-43A9-81B0-38177790329D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06F33930-4ED6-43A9-81B0-38177790329D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06F33930-4ED6-43A9-81B0-38177790329D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{032E5833-CD64-40DD-9D1C-215A5A05B143}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{032E5833-CD64-40DD-9D1C-215A5A05B143}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{032E5833-CD64-40DD-9D1C-215A5A05B143}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{032E5833-CD64-40DD-9D1C-215A5A05B143}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
