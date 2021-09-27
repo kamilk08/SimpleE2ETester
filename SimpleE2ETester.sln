@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleE2ETesterLibrary", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleE2ETesterLibraryTests", "SimpleE2ETesterLibraryTests\SimpleE2ETesterLibraryTests.csproj", "{032E5833-CD64-40DD-9D1C-215A5A05B143}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestsApi", "TestsApi\TestsApi.csproj", "{69308804-CFC9-4C73-A064-CDF00745015A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{032E5833-CD64-40DD-9D1C-215A5A05B143}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{032E5833-CD64-40DD-9D1C-215A5A05B143}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{032E5833-CD64-40DD-9D1C-215A5A05B143}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69308804-CFC9-4C73-A064-CDF00745015A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69308804-CFC9-4C73-A064-CDF00745015A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69308804-CFC9-4C73-A064-CDF00745015A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69308804-CFC9-4C73-A064-CDF00745015A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
