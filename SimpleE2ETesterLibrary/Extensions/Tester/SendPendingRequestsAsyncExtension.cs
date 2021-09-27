@@ -26,14 +26,14 @@ namespace SimpleE2ETesterLibrary.Extensions.Tester
         }
 
 
-        // public static async Task<ISimpleE2ETester> SendPendingRequestsAsync(this Task<ISimpleE2ETester> testerTask)
-        // {
-        //     var tester = await testerTask;
-        //
-        //     await tester.SendPendingRequestsAsync(Order.InOrder);
-        //
-        //     return tester;
-        // }
+        public static async Task<ISimpleE2ETester> SendPendingRequestsAsync(this Task<ISimpleE2ETester> testerTask,Order order = Order.InOrder)
+        {
+            var tester = await testerTask;
+        
+            await tester.SendPendingRequestsAsync(order);
+        
+            return tester;
+        }
 
         private static async Task SendRequestsInOrderAsync(List<PendingRequest> pendingRequests, SimpleE2ETester helper)
         {
