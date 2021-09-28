@@ -6,28 +6,31 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Microsoft.Owin.Testing;
 using Newtonsoft.Json;
 using SimpleE2ETesterLibrary.Extensions.Tester;
 using SimpleE2ETesterLibrary.HttpClients;
 using SimpleE2ETesterLibrary.Interfaces;
 using SimpleE2ETesterLibrary.Models;
 using SimpleE2ETesterLibraryTests.Models;
+using TestsApi;
 using TestsApi.Models;
 using Xunit;
 
 namespace SimpleE2ETesterLibraryTests
 {
-
+    [Collection("Sequential")]
     public class UnitTests
     {
         private readonly ISimpleE2ETester _tester;
-        private static HttpClient HttpClient = new HttpClient();
 
         public UnitTests()
         {
-            _tester = new SimpleE2ETester(new AspNetHttpClient(HttpClient));
+            var testServer = TestServer.Create<Startup>();
+            
+            _tester = new SimpleE2ETester(new AspNetHttpClient(testServer.HttpClient));
         }
-        
+
         [Theory]
         [InlineData(100)]
         [InlineData(50)]
@@ -117,7 +120,8 @@ namespace SimpleE2ETesterLibraryTests
         public void AddCompletedRequest_WhenCalledAndRequestIsNull_ThenItShouldThrowInvalidOperationException()
         {
             Action act = () => _tester.AddCompletedRequest(null,
-                new HttpResponse(HttpStatusCode.Forbidden, new StringContent(Guid.NewGuid().ToString()),new HttpResponseMessage(HttpStatusCode.Accepted)));
+                new HttpResponse(HttpStatusCode.Forbidden, new StringContent(Guid.NewGuid().ToString()),
+                    new HttpResponseMessage(HttpStatusCode.Accepted)));
 
             act.Should().Throw<InvalidOperationException>();
         }
@@ -125,7 +129,9 @@ namespace SimpleE2ETesterLibraryTests
         [Fact]
         public void AddCompletedRequest_WhenCalledAndResponseIsNull_ThenItShouldThrowInvalidOperationException()
         {
-            Action act = () => _tester.AddCompletedRequest(new HttpGetTestRequest(), null);
+            var queryValue = 1;
+
+            Action act = () => _tester.AddCompletedRequest(new HttpGetTestRequest(queryValue), null);
 
             act.Should().Throw<InvalidOperationException>();
         }
@@ -153,7 +159,7 @@ namespace SimpleE2ETesterLibraryTests
 
             act.Should().Throw<InvalidOperationException>();
         }
-        
+
         private List<Task> CreateTestTasks(int count)
         {
             var tasksList = new List<Task>();
@@ -192,13 +198,12 @@ namespace SimpleE2ETesterLibraryTests
             {
                 var response = new HttpResponse(HttpStatusCode.OK,
                     new StringContent(JsonConvert.SerializeObject(Guid.NewGuid().ToString()), Encoding.UTF8,
-                        "application/json"),new HttpResponseMessage(HttpStatusCode.Accepted));
+                        "application/json"), new HttpResponseMessage(HttpStatusCode.Accepted));
 
                 responses.Add(response);
             }
 
             return responses;
         }
-        
     }
 }
