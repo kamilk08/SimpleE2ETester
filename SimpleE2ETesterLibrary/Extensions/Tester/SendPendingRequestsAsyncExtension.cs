@@ -50,7 +50,7 @@ namespace SimpleE2ETesterLibrary.Extensions.Tester
         {
             var tasks = pendingRequests.Select(s => Task.Run(async () =>
             {
-                var response = await helper.SendAsyncAndMapToResult(s.SimpleHttpRequest);
+                await helper.SendAsyncAndMapToResult(s.SimpleHttpRequest);
 
             })).ToList();
 

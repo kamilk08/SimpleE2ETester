@@ -10,19 +10,7 @@ namespace SimpleE2ETesterLibrary.Extensions.Tester
         public static async Task<ISimpleE2ETester> DoAsync(this ISimpleE2ETester tester, Order order = Order.InOrder)
         {
             if (order == Order.InOrder)
-            {
                 await RunPendingTasksInOrderInternal(tester);
-
-                // var pendingTasks = tester.GetPendingTasks().ToList();
-                //
-                // for (int i = 0; i < pendingTasks.Count; i++)
-                // {
-                //     var pendingTask = pendingTasks[i];
-                //     await pendingTask.Task;
-                //
-                //     tester.AddCompletedTask(new CompletedTask(pendingTask.Task, pendingTask.Position));
-                // }
-            }
             else
                 await RunPendingTasksInternal(tester);
 
