@@ -3,10 +3,10 @@ using System.Net.Http;
 using System.Text;
 using Newtonsoft.Json;
 using SimpleE2ETesterLibrary.Interfaces;
-using SimpleE2ETesterLibrary.Models;
-using SimpleE2ETesterWebApi.Models;
+using SimpleE2ETesterLibraryTests.Helpers;
+using TestsApi.Models;
 
-namespace SimpleE2ETesterNetTests.TestRequests
+namespace SimpleE2ETesterLibraryTests.Models
 {
     public class HttpPutTestRequest : ISimpleHttpRequest
     {
@@ -19,7 +19,7 @@ namespace SimpleE2ETesterNetTests.TestRequests
 
         public HttpRequestMessage ToHttpRequest()
         {
-            var uri = new Uri("http://localhost:5000/api/put/{dto}");
+            var uri = new Uri(UrlHelper.Put());
 
             var httpRequest = new HttpRequestMessage(HttpMethod.Put, uri)
             {

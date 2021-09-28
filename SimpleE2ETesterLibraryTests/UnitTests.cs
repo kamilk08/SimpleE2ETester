@@ -11,8 +11,8 @@ using SimpleE2ETesterLibrary.Extensions.Tester;
 using SimpleE2ETesterLibrary.HttpClients;
 using SimpleE2ETesterLibrary.Interfaces;
 using SimpleE2ETesterLibrary.Models;
-using SimpleE2ETesterNetTests.TestRequests;
-using SimpleE2ETesterWebApi.Models;
+using SimpleE2ETesterLibraryTests.Models;
+using TestsApi.Models;
 using Xunit;
 
 namespace SimpleE2ETesterLibraryTests

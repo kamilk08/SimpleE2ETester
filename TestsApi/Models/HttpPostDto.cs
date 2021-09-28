@@ -1,8 +1,7 @@
-﻿﻿using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 
-namespace SimpleE2ETesterWebApi.Models
+namespace TestsApi.Models
 {
     public class HttpPostDto
     {
