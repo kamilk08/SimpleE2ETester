@@ -145,6 +145,7 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Api\TestsApiController.cs" />
         <Compile Include="Models\HttpDeleteDto.cs" />
         <Compile Include="Models\HttpPostDto.cs" />
         <Compile Include="Models\HttpPutDto.cs" />
