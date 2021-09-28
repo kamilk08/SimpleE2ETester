@@ -5,9 +5,9 @@
         <RootNamespace>SimpleE2ETesterLibrary</RootNamespace>
         <Company>SimpleE2ETesterLibrary</Company>
         <Product>SimpleE2ETesterLibrary</Product>
-        <TargetFrameworks>net472;net48</TargetFrameworks>
+        <TargetFrameworks>net462;net47;net471;net472;net48;netstandard2.0;netstandard2.1</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageVersion>1.0.2</PackageVersion>
+        <PackageVersion>1.0.3</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
