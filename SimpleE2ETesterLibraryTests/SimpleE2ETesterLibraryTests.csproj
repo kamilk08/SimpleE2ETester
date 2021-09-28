@@ -18,6 +18,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\SimpleE2ETesterLibrary\SimpleE2ETesterLibrary.csproj" />
+      <ProjectReference Include="..\TestsApi\TestsApi.csproj" />
     </ItemGroup>
 
 </Project>

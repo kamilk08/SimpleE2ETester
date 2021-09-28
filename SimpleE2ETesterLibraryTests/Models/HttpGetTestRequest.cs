@@ -1,9 +1,8 @@
-﻿﻿using System;
+﻿using System;
 using System.Net.Http;
 using SimpleE2ETesterLibrary.Interfaces;
-using SimpleE2ETesterLibrary.Models;
 
-namespace SimpleE2ETesterNetTests.TestRequests
+namespace SimpleE2ETesterLibraryTests.Models
 {
     public class HttpGetTestRequest : ISimpleHttpRequest
     {
