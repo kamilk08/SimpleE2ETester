@@ -1,7 +1,9 @@
-﻿using System;
+﻿﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using SimpleE2ETesterLibrary.Interfaces;
 
@@ -10,19 +12,19 @@ namespace SimpleE2ETesterLibrary.Models
     public class SimpleE2ETester : ISimpleE2ETester
     {
         internal readonly List<PendingRequest> PendingRequests;
-        internal readonly List<SimpleCompletedRequest> CompletedRequests;
+        internal ConcurrentQueue<SimpleCompletedRequest> CompletedRequests;
 
         private readonly List<PendingTask> _pendingTasks;
-        private readonly List<CompletedTask> _completedTasks;
+        private ConcurrentQueue<CompletedTask> _completedTasks;
         
         public IHttpClient Client { get; }
 
         public SimpleE2ETester()
         {
             PendingRequests = new List<PendingRequest>();
-            CompletedRequests = new List<SimpleCompletedRequest>();
+            CompletedRequests = new ConcurrentQueue<SimpleCompletedRequest>();
             _pendingTasks = new List<PendingTask>();
-            _completedTasks = new List<CompletedTask>();
+            _completedTasks = new ConcurrentQueue<CompletedTask>();
         }
 
         public SimpleE2ETester(IHttpClient client) : this()
@@ -56,7 +58,7 @@ namespace SimpleE2ETesterLibrary.Models
             if (response == null)
                 throw new InvalidOperationException("Cannot add invalid response message.Response is null.");
 
-            this.CompletedRequests.Add(
+            this.CompletedRequests.Enqueue(
                 new SimpleCompletedRequest(request, new SimpleHttpResponseResult(this, response)));
 
             return this;
@@ -66,7 +68,7 @@ namespace SimpleE2ETesterLibrary.Models
         {
             if(completedTask==null) throw new InvalidOperationException("Cannot add completed task. Task cannot be null");
 
-            _completedTasks.Add(completedTask);
+            _completedTasks.Enqueue(completedTask);
             
             return this;
         }
@@ -74,9 +76,11 @@ namespace SimpleE2ETesterLibrary.Models
         public ISimpleE2ETester ClearCompletedRequests()
         {
             if (this.CompletedRequests == null)
-                throw new InvalidOperationException($"Cannot clear requests. Completed requests not initialized.");
+                throw new InvalidOperationException($"Cannot clear requests. Completed requests are not initialized.");
 
-            this.CompletedRequests.Clear();
+            var newBag = new ConcurrentQueue<SimpleCompletedRequest>();
+
+            Interlocked.Exchange<ConcurrentQueue<SimpleCompletedRequest>>(ref CompletedRequests, newBag);
 
             return this;
         }
@@ -86,7 +90,7 @@ namespace SimpleE2ETesterLibrary.Models
             if (this.PendingRequests == null)
                 throw new InvalidOperationException(
                     $"Cannot clear pending requests. Pending requests list is not initialized.");
-
+            
             this.PendingRequests.Clear();
 
             return this;
@@ -97,7 +101,9 @@ namespace SimpleE2ETesterLibrary.Models
             if(this._completedTasks==null)
                 throw new InvalidOperationException($"Cannot clear completed requests. Completed tasks list is not initialized.");
             
-            this._completedTasks.Clear();
+            var newBag = new ConcurrentQueue<CompletedTask>();
+
+            Interlocked.Exchange<ConcurrentQueue<CompletedTask>>(ref _completedTasks, newBag);
             
             return this;
         }
