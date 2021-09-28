@@ -1,8 +1,9 @@
-﻿using System;
+﻿﻿using System;
 using System.Net.Http;
 using System.Text;
 using Newtonsoft.Json;
 using SimpleE2ETesterLibrary.Interfaces;
+using SimpleE2ETesterLibraryTests.Helpers;
 using TestsApi.Models;
 
 namespace SimpleE2ETesterLibraryTests.Models
@@ -18,7 +19,7 @@ namespace SimpleE2ETesterLibraryTests.Models
 
         public HttpRequestMessage ToHttpRequest()
         {
-            var uri = new Uri("http://localhost:5000/api/delete/{dto}");
+            var uri = new Uri(UrlHelper.Delete());
 
             var httpRequest = new HttpRequestMessage(HttpMethod.Delete, uri)
             {
