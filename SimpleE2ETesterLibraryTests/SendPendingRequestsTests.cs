@@ -38,7 +38,7 @@ namespace SimpleE2ETesterLibraryTests
 
             var pendingRequests = _tester.GetPendingRequests().ToList();
 
-            await _tester.SendPendingRequestsAsync(Order.InOrder);
+            await _tester.SendPendingRequestsAsync(Order.Sequential);
 
             var completedRequests = _tester.GetCompletedRequests().ToList();
 
@@ -66,7 +66,7 @@ namespace SimpleE2ETesterLibraryTests
 
             var pendingRequests = _tester.GetPendingRequests().ToList();
 
-            await _tester.SendPendingRequestsAsync(Order.InOrder);
+            await _tester.SendPendingRequestsAsync(Order.Sequential);
 
             var completedRequests = _tester.GetCompletedRequests().ToList();
 

@@ -53,7 +53,7 @@ namespace SimpleE2ETesterLibraryTests
                     Id = 3,
                     Flag = false
                 }))
-                .SendPendingRequestsAsync()
+                .SendPendingRequestsAsync(Order.Sequential)
                 .AreAllRequestsSuccessfulAsync((flag) => flag.Should().BeTrue());
         }
 
@@ -80,7 +80,7 @@ namespace SimpleE2ETesterLibraryTests
                     Id = 3,
                     Flag = false
                 }))
-                .SendPendingRequestsAsync()
+                .SendPendingRequestsAsync(Order.Sequential)
                 .AreAllRequestsSuccessfulAsync((flag) => flag.Should().BeFalse());
         }
     }
