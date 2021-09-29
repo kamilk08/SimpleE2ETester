@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SimpleE2ETesterLibrary.Interfaces;
 
-namespace SimpleE2ETesterLibrary.Models
+namespace SimpleE2ETesterLibrary.Models.Responses
 {
     public class SimpleHttpResponseResult : BaseHttpResponseResultResult,ISimpleHttpResponseResult
     {

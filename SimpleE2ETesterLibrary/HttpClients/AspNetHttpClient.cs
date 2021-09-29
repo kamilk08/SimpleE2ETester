@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using SimpleE2ETesterLibrary.Interfaces;
 using SimpleE2ETesterLibrary.Models;
+using SimpleE2ETesterLibrary.Models.Responses;
 
 namespace SimpleE2ETesterLibrary.HttpClients
 {

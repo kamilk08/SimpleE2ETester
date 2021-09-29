@@ -1,6 +1,6 @@
 ﻿using SimpleE2ETesterLibrary.Interfaces;
 
-namespace SimpleE2ETesterLibrary.Models
+namespace SimpleE2ETesterLibrary.Models.Requests
 {
     public class PendingRequest
     {

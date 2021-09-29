@@ -6,8 +6,11 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using SimpleE2ETesterLibrary.Interfaces;
+ using SimpleE2ETesterLibrary.Models.Requests;
+ using SimpleE2ETesterLibrary.Models.Responses;
+ using SimpleE2ETesterLibrary.Models.Tasks;
 
-namespace SimpleE2ETesterLibrary.Models
+ namespace SimpleE2ETesterLibrary.Models
 {
     public class SimpleE2ETester : ISimpleE2ETester
     {

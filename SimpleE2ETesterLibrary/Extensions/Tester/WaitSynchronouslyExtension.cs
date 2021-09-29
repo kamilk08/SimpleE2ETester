@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using SimpleE2ETesterLibrary.Interfaces;
 using SimpleE2ETesterLibrary.Models;
+using SimpleE2ETesterLibrary.Models.Delays;
 
 namespace SimpleE2ETesterLibrary.Extensions.Tester
 {

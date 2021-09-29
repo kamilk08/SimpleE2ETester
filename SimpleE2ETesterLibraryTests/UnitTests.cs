@@ -12,6 +12,8 @@ using SimpleE2ETesterLibrary.Extensions.Tester;
 using SimpleE2ETesterLibrary.HttpClients;
 using SimpleE2ETesterLibrary.Interfaces;
 using SimpleE2ETesterLibrary.Models;
+using SimpleE2ETesterLibrary.Models.Responses;
+using SimpleE2ETesterLibrary.Models.Tasks;
 using SimpleE2ETesterLibraryTests.Models;
 using TestsApi;
 using TestsApi.Models;

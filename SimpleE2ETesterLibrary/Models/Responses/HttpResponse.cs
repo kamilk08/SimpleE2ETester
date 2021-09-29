@@ -1,8 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http;
-using SimpleE2ETesterLibrary.Interfaces;
 
-namespace SimpleE2ETesterLibrary.Models
+namespace SimpleE2ETesterLibrary.Models.Responses
 {
     public class HttpResponse
     {

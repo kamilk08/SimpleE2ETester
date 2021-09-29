@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using SimpleE2ETesterLibrary.Interfaces;
 
-namespace SimpleE2ETesterLibrary.Models
+namespace SimpleE2ETesterLibrary.Models.Tasks
 {
     public class SimpleWork<T>
     {

@@ -1,4 +1,4 @@
-﻿namespace SimpleE2ETesterLibrary.Models
+﻿namespace SimpleE2ETesterLibrary.Models.Delays
 {
     public class MinutesUnit : ITimeUnit
     {

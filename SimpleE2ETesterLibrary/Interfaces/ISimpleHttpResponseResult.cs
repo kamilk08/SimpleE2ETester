@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using SimpleE2ETesterLibrary.Models;
+using SimpleE2ETesterLibrary.Models.Responses;
 
 namespace SimpleE2ETesterLibrary.Interfaces
 {

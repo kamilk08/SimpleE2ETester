@@ -2,6 +2,9 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using SimpleE2ETesterLibrary.Models;
+using SimpleE2ETesterLibrary.Models.Requests;
+using SimpleE2ETesterLibrary.Models.Responses;
+using SimpleE2ETesterLibrary.Models.Tasks;
 
 namespace SimpleE2ETesterLibrary.Interfaces
 {
