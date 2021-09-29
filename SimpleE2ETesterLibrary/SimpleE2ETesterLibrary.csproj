@@ -7,7 +7,7 @@
         <Product>SimpleE2ETesterLibrary</Product>
         <TargetFrameworks>net462;net47;net471;net472;net48;netstandard2.0;netstandard2.1</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageVersion>1.0.3</PackageVersion>
+        <PackageVersion>1.0.4</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
