@@ -32,6 +32,13 @@ namespace SimpleE2ETesterLibrary.Extensions.Tester
             return await DoAsync(tester, Order.Sequential);
         }
 
+        public static async Task<ISimpleE2ETester> DoAsync(this Task<ISimpleE2ETester> testerTask)
+        {
+            var tester = await testerTask;
+
+            return await DoAsync(tester, Order.Sequential);
+        }
+
         public static async Task<ISimpleE2ETester> DoAsyncWithThrottleAsync(ISimpleE2ETester tester,
             ThrottleOptions options)
         {
