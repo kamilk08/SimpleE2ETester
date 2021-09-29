@@ -40,10 +40,11 @@ namespace SimpleE2ETesterLibraryTests
             for (int i = 0; i < count; i++)
                 _tester.AddTask(() => SendRequest(i));
 
-            await _tester
-                .DoAsync(Order.InOrder);
-
             var pendingTasksPositions = _tester.GetPendingTasks().Select(s => s.Position).ToList();
+            
+            await _tester
+                .DoAsync(Order.Sequential);
+            
             var completedTasksPositions = _tester.GetCompletedTasks().Select(s => s.Position).ToList();
 
             pendingTasksPositions.SequenceEqual(completedTasksPositions).Should().BeTrue();
@@ -58,10 +59,11 @@ namespace SimpleE2ETesterLibraryTests
             for (int i = 0; i < count; i++)
                 _tester.AddTask(() => SendRequest(i));
             
+            var pendingTasksPositions = _tester.GetPendingTasks().Select(s => s.Position).ToList();
+            
             await _tester
                 .DoAsync(Order.Random);
-
-            var pendingTasksPositions = _tester.GetPendingTasks().Select(s => s.Position).ToList();
+            
             var completedTasksPositions = _tester.GetCompletedTasks()
                 .Where(p => p != null)
                 .Select(s => s.Position).ToList();
