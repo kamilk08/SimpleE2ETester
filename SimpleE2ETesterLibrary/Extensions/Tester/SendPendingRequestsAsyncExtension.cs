@@ -10,13 +10,13 @@ namespace SimpleE2ETesterLibrary.Extensions.Tester
     public static class SendPendingRequestsAsyncExtension
     {
         public static async Task<ISimpleE2ETester> SendPendingRequestsAsync(this ISimpleE2ETester tester,
-            Order order = Order.InOrder)
+            Order order)
         {
             var pendingRequests = tester.GetPendingRequests().ToList();
 
             var helper = (SimpleE2ETester) tester;
 
-            if (order == Order.InOrder)
+            if (order == Order.Sequential)
                 await SendRequestsInOrderAsync(pendingRequests, helper);
             else
                 await SendRequestsInRandomOrderAsync(pendingRequests, helper);
@@ -27,7 +27,7 @@ namespace SimpleE2ETesterLibrary.Extensions.Tester
         }
 
 
-        public static async Task<ISimpleE2ETester> SendPendingRequestsAsync(this Task<ISimpleE2ETester> testerTask,Order order = Order.InOrder)
+        public static async Task<ISimpleE2ETester> SendPendingRequestsAsync(this Task<ISimpleE2ETester> testerTask,Order order)
         {
             var tester = await testerTask;
         

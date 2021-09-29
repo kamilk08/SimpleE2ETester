@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using SimpleE2ETesterLibrary.Interfaces;
 using SimpleE2ETesterLibrary.Models;
@@ -8,9 +10,9 @@ namespace SimpleE2ETesterLibrary.Extensions.Tester
 {
     public static class DoAsyncExtension
     {
-        public static async Task<ISimpleE2ETester> DoAsync(this ISimpleE2ETester tester, Order order = Order.InOrder)
+        public static async Task<ISimpleE2ETester> DoAsync(this ISimpleE2ETester tester, Order order)
         {
-            if (order == Order.InOrder)
+            if (order == Order.Sequential)
                 await RunPendingTasksInOrderInternal(tester);
             else
                 await RunPendingTasksInternal(tester);
@@ -18,17 +20,35 @@ namespace SimpleE2ETesterLibrary.Extensions.Tester
             return tester;
         }
 
-        public static async Task<ISimpleE2ETester> DoAsync(this Task<ISimpleE2ETester> testerTask,
-            Order order = Order.InOrder)
+        public static async Task<ISimpleE2ETester> DoAsync(this Task<ISimpleE2ETester> testerTask, Order order)
         {
             var tester = await testerTask;
 
-            if (order == Order.InOrder)
-                await RunPendingTasksInOrderInternal(tester);
-            else
-                await RunPendingTasksInternal(tester);
+            return await DoAsync(tester, order);
+        }
+
+        public static async Task<ISimpleE2ETester> DoAsync(this ISimpleE2ETester tester)
+        {
+            return await DoAsync(tester, Order.Sequential);
+        }
+
+        public static async Task<ISimpleE2ETester> DoAsyncWithThrottleAsync(ISimpleE2ETester tester,
+            ThrottleOptions options)
+        {
+            if (options == null)
+                options = ThrottleOptions.Default();
+
+            await RunPendingTasksWithThrottler(tester, options);
 
             return tester;
+        }
+
+        public static async Task<ISimpleE2ETester> DoAsyncWithThrottleAsync(this Task<ISimpleE2ETester> testerTask,
+            ThrottleOptions options)
+        {
+            var tester = await testerTask;
+
+            return await DoAsyncWithThrottleAsync(tester, options);
         }
 
         private static async Task RunPendingTasksInOrderInternal(ISimpleE2ETester tester)
@@ -51,6 +71,28 @@ namespace SimpleE2ETesterLibrary.Extensions.Tester
                 await s.Task;
                 tester.AddCompletedTask(new CompletedTask(s.Task, s.Position));
             }));
+
+            await Task.WhenAll(pendingTasks);
+        }
+
+        private static async Task RunPendingTasksWithThrottler(ISimpleE2ETester tester, ThrottleOptions options)
+        {
+            var throttler = new SemaphoreSlim(options.InitialCount, options.MaxCount);
+
+            var pendingTasks = tester.GetPendingTasks().Select(async s =>
+            {
+                await throttler.WaitAsync();
+
+                try
+                {
+                    await s.Task;
+                    tester.AddCompletedTask(new CompletedTask(s.Task, s.Position));
+                }
+                finally
+                {
+                    throttler.Release();
+                }
+            });
 
             await Task.WhenAll(pendingTasks);
         }
