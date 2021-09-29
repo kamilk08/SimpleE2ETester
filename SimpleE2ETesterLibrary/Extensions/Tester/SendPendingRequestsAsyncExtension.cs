@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using SimpleE2ETesterLibrary.Interfaces;
 using SimpleE2ETesterLibrary.Models;
@@ -12,50 +13,127 @@ namespace SimpleE2ETesterLibrary.Extensions.Tester
         public static async Task<ISimpleE2ETester> SendPendingRequestsAsync(this ISimpleE2ETester tester,
             Order order)
         {
-            var pendingRequests = tester.GetPendingRequests().ToList();
-
             var helper = (SimpleE2ETester) tester;
 
             if (order == Order.Sequential)
-                await SendRequestsInOrderAsync(pendingRequests, helper);
+                helper = await SendRequestsInOrderAsync(helper) as SimpleE2ETester;
             else
-                await SendRequestsInRandomOrderAsync(pendingRequests, helper);
+                helper = await SendRequestsInRandomOrderAsync(helper) as SimpleE2ETester;
 
-            helper.PendingRequests.Clear();
+            helper.ClearPendingRequests();
 
             return helper;
         }
 
 
-        public static async Task<ISimpleE2ETester> SendPendingRequestsAsync(this Task<ISimpleE2ETester> testerTask,Order order)
+        public static async Task<ISimpleE2ETester> SendPendingRequestsAsync(this Task<ISimpleE2ETester> testerTask,
+            Order order)
         {
             var tester = await testerTask;
-        
-            await tester.SendPendingRequestsAsync(order);
-        
-            return tester;
+
+            return await SendPendingRequestsAsync(tester, order);
         }
 
-        private static async Task SendRequestsInOrderAsync(List<PendingRequest> pendingRequests, SimpleE2ETester helper)
+        public static async Task<ISimpleE2ETester> SendPendingRequestsAsync(this ISimpleE2ETester tester)
         {
+            return await SendPendingRequestsAsync(tester, Order.Sequential);
+        }
+
+        public static async Task<ISimpleE2ETester> SendPendingRequestsAsync(this Task<ISimpleE2ETester> testerTask)
+        {
+            var tester = await testerTask;
+
+            return await SendPendingRequestsAsync(tester, Order.Sequential);
+        }
+
+        public static async Task<ISimpleE2ETester> SendPendingRequestsWithThrottleAsync(this ISimpleE2ETester tester,
+            ThrottleOptions options)
+        {
+            var helper = (SimpleE2ETester) tester;
+
+            helper = await SendPendingRequestsWithThrottler(helper, options) as SimpleE2ETester;
+
+            helper.ClearPendingRequests();
+
+            return helper;
+        }
+
+        public static async Task<ISimpleE2ETester> SendPendingRequestsWithThrottleAsync(
+            this Task<ISimpleE2ETester> testerTask, ThrottleOptions options)
+        {
+            var tester = await testerTask;
+
+            return await SendPendingRequestsWithThrottler(tester, options);
+        }
+
+        public static async Task<ISimpleE2ETester> SendPendingRequestsWithThrottleAsync(
+            this SimpleE2ETester tester)
+        {
+            return await SendPendingRequestsWithThrottler(tester, ThrottleOptions.Default());
+        }
+
+        public static async Task<ISimpleE2ETester> SendPendingRequestsWithThrottleAsync(
+            this Task<ISimpleE2ETester> testerTask)
+        {
+            var tester = await testerTask;
+
+            return await SendPendingRequestsWithThrottler(tester, ThrottleOptions.Default());
+        }
+
+        private static async Task<ISimpleE2ETester> SendRequestsInOrderAsync(SimpleE2ETester tester)
+        {
+            var pendingRequests = tester.GetPendingRequests().ToList();
+
             for (int i = 0; i < pendingRequests.Count(); i++)
             {
                 var pendingRequest = pendingRequests[i];
 
-                var result = await helper.SendAsyncAndMapToResult(pendingRequest.SimpleHttpRequest);
+                var result = await tester.SendAsyncAndMapToResult(pendingRequest.SimpleHttpRequest);
             }
+
+            return tester;
         }
 
-        private static async Task SendRequestsInRandomOrderAsync(List<PendingRequest> pendingRequests,
-            ISimpleE2ETester helper)
+        private static async Task<ISimpleE2ETester> SendRequestsInRandomOrderAsync(ISimpleE2ETester tester)
         {
+            var pendingRequests = tester.GetPendingRequests().ToList();
+
             var tasks = pendingRequests.Select(s => Task.Run(async () =>
             {
-                await helper.SendAsyncAndMapToResult(s.SimpleHttpRequest);
-
+                await tester.SendAsyncAndMapToResult(s.SimpleHttpRequest);
             })).ToList();
 
             await Task.WhenAll(tasks);
+
+            return tester;
+        }
+
+        private static async Task<ISimpleE2ETester> SendPendingRequestsWithThrottler(ISimpleE2ETester tester,
+            ThrottleOptions options)
+        {
+            if (options == null) options = ThrottleOptions.Default();
+
+            var throttler = new SemaphoreSlim(options.InitialCount, options.MaxCount);
+
+            var pendingRequests = tester.GetPendingRequests().ToList();
+
+            var tasks = pendingRequests.Select(s => Task.Run(async () =>
+            {
+                await throttler.WaitAsync();
+
+                try
+                {
+                    await tester.SendAsyncAndMapToResult(s.SimpleHttpRequest);
+                }
+                finally
+                {
+                    throttler.Release();
+                }
+            }));
+
+            await Task.WhenAll(tasks);
+
+            return tester;
         }
     }
 }
