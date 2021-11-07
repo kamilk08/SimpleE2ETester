@@ -8,7 +8,6 @@ namespace SimpleE2ETesterLibrary.Extensions.Responses
 {
     public static class BackExtension
     {
-        
         public static async Task<ISimpleE2ETester> Back(this Task<ISimpleHttpResponseResult> task)
         {
             var awaited = await task;

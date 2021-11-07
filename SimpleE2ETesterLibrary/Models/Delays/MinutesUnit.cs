@@ -4,11 +4,8 @@
     {
         public int Duration { get; }
 
-        private MinutesUnit()
-        {
-            
-        }
-        
+        private MinutesUnit() { }
+
         public MinutesUnit(int duration)
         {
             Duration = duration;
