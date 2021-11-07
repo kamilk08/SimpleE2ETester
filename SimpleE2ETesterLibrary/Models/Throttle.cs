@@ -2,6 +2,9 @@
 {
     public class ThrottleOptions
     {
+        private const int DefaultInitialCount = 10;
+        private const int DefaultMaxCount = 100;
+
         public int InitialCount { get; }
 
         public int MaxCount { get; }
@@ -14,7 +17,7 @@
 
         public static ThrottleOptions Default()
         {
-            return new ThrottleOptions(10, 100);
+            return new ThrottleOptions(DefaultInitialCount, DefaultMaxCount);
         }
     }
 }
