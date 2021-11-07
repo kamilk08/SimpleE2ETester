@@ -8,6 +8,13 @@ namespace SimpleE2ETesterLibrary.Extensions.Tester
 {
     public static class AddPendingRequestExtension
     {
+        public static ISimpleE2ETester AddRequest(this ISimpleE2ETester tester, ISimpleHttpRequest request)
+        {
+            tester.AddRequest(request);
+            
+            return tester;
+        }
+        
         public static ISimpleE2ETester AddRequest(this ISimpleE2ETester tester, Func<ISimpleHttpRequest> func)
         {
             tester.AddRequest(func());
