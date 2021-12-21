@@ -21,9 +21,9 @@ namespace SimpleE2ETesterLibrary.Interfaces
         bool IsServerError();
         
         ISimpleHttpResponseResult Tap(Action<ISimpleHttpResponseResult> action);
-        Task<ISimpleHttpResponseResult> TapAsync(Func<ISimpleHttpResponseResult, Task> func);
+        Task<ISimpleHttpResponseResult> Tap(Func<ISimpleHttpResponseResult, Task> func);
         
-        Task<ISimpleE2ETester> GetTester();
+        ISimpleE2ETester GetTester();
         Task<T> GetResponseContentAsync<T>();
         T GetRawResponse<T>();
     }

@@ -17,7 +17,7 @@ namespace SimpleE2ETesterLibrary.Models.Responses
         public abstract HttpStatusCode StatusCode { get; }
 
         public abstract ISimpleHttpResponseResult Tap(Action<ISimpleHttpResponseResult> action);
-        public abstract Task<ISimpleHttpResponseResult> TapAsync(Func<ISimpleHttpResponseResult, Task> func);
+        public abstract Task<ISimpleHttpResponseResult> Tap(Func<ISimpleHttpResponseResult, Task> func);
         
         public bool IsOk() => this.StatusCode == HttpStatusCode.OK;
         public bool IsAccepted() => this.StatusCode == HttpStatusCode.Accepted;
@@ -33,6 +33,6 @@ namespace SimpleE2ETesterLibrary.Models.Responses
         public abstract Task<T> GetResponseContentAsync<T>();
         public abstract T GetRawResponse<T>();
         
-        public Task<ISimpleE2ETester> GetTester() => Task.FromResult(Tester);
+        public ISimpleE2ETester GetTester() => Tester;
     }
 }

@@ -31,7 +31,7 @@ namespace SimpleE2ETesterLibrary.Models.Responses
             return this;
         }
 
-        public override async Task<ISimpleHttpResponseResult> TapAsync(Func<ISimpleHttpResponseResult, Task> func)
+        public override async Task<ISimpleHttpResponseResult> Tap(Func<ISimpleHttpResponseResult, Task> func)
         {
            var task= func(this);
            await task;
