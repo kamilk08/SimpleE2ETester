@@ -22,7 +22,7 @@ namespace SimpleE2ETesterLibrary.Extensions.Tester
             return tester;
         }
         
-        public static async Task<ISimpleE2ETester> AddRequestAsync(this Task<ISimpleE2ETester> testerTask,
+        public static async Task<ISimpleE2ETester> AddRequest(this Task<ISimpleE2ETester> testerTask,
             ISimpleHttpRequest request)
         {
             var tester = await testerTask;
@@ -32,10 +32,10 @@ namespace SimpleE2ETesterLibrary.Extensions.Tester
             return tester;
         }
 
-        public static Task<ISimpleE2ETester> AddRequestAsync(this Task<ISimpleE2ETester> testerTask,
+        public static Task<ISimpleE2ETester> AddRequest(this Task<ISimpleE2ETester> testerTask,
             Func<ISimpleHttpRequest> func)
         {
-            var tester =  testerTask.AddRequestAsync(func());
+            var tester =  testerTask.AddRequest(func());
 
             return tester;
         }
