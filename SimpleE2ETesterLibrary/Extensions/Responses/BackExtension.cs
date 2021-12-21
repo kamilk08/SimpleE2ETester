@@ -8,11 +8,16 @@ namespace SimpleE2ETesterLibrary.Extensions.Responses
 {
     public static class BackExtension
     {
+        public static ISimpleE2ETester Back(ISimpleHttpResponseResult result)
+        {
+            return result.GetTester();
+        }
+
         public static async Task<ISimpleE2ETester> Back(this Task<ISimpleHttpResponseResult> task)
         {
             var awaited = await task;
-            var helper = await awaited.GetTester();
-            
+            var helper = awaited.GetTester();
+
             return helper;
         }
 
@@ -20,7 +25,7 @@ namespace SimpleE2ETesterLibrary.Extensions.Responses
         {
             var tasks = await task;
 
-            var tester = await tasks.First().GetTester();
+            var tester = tasks.First().GetTester();
 
             return tester;
         }
